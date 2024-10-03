@@ -165,7 +165,7 @@ Lab3_STEDI_Health_Analytics
 ```
 
 - Acquire the routing-table and vpc-id values, and replace it in this following command to create S3 Gateway Endpoint
-  ``` \aws ec2 create-vpc-endpoint --vpc-id _______ --service-name com.amazonaws.us-east-1.s3 --route-table-ids _______```
+  ```\aws ec2 create-vpc-endpoint --vpc-id _______ --service-name com.amazonaws.us-east-1.s3 --route-table-ids _______```
 
 ### Create S3 IAM Role
 Enter the following command in the AWS Cli to authorize the S3 to interact with the Athena and Glue service
@@ -377,7 +377,9 @@ aws iam put-role-policy --role-name my-glue-service-role --policy-name GlueAcces
 ```
 ## Extract and load data
 - We will work on three types data, known as **customer**, **step_trainer** and **accelerometer**, in which we will have to copy into the s3 storage
-  To do that, please clone this repo and then point to the directory of the data, and then enter this one ``` aws s3 cp ./project/starter/customer/landing/customer-1691348231425.json s3://_______/customer/landing/```
+  To do that, please clone this repo and then point to the directory of the data, and then enter this command
+  
+   ``` aws s3 cp ./project/starter/customer/landing/customer-1691348231425.json s3://_______/customer/landing/```
 - Then please visit AWS Glue, and import or code by the Spark Glue Job file, or just drag-and-drop the box and declare the relevant information of the data to export the desire data after processing
 - We can create the Table after processing in AWS Athena, and then declare the directory where the output data lying in S3 to pour the data into the table. After that, please check the table by implementing the SQL Query on Athena.
 # Queries
