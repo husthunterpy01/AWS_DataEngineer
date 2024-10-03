@@ -14,7 +14,7 @@ Steps to follow:
 
 
 # Highlights
-
+## Data
 Original data:
 In this project, we will work with three main data types, including 
 - Customer Records:
@@ -56,10 +56,56 @@ Step Trainer: 14460
 - Their relationship is presented within this ERD:
 ![Header](./ERD_Lakehouse.png)
 
-# Project flowchart
+## Project flowchart
 This project is conducted through AWS Services, such as AWS Athena, AWS Glue and and AWS S3:
 ![Header](./flowchart.jpg)
 
+## Files Directories
+```plaintext
+Lab3_STEDI_Health_Analytics
+├── Data_Checked
+    ├── accelerometer
+         ├── accelerometer_landing.png
+         ├── accelerometer_trusted.png
+    ├── customer
+         ├── customer_landing.png
+         ├── customer_trusted.png
+         ├── customers_curated.png
+    ├── step_trainer
+         ├── step_trainer_landing.png
+         ├── step_trainer_trusted.png
+    ├── ml_curated.png
+├── Spark Glue Job
+         ├── accelerometer_landing_to_trusted.py
+         ├── customer_landing_to_trusted.py
+         ├── customer_trusted_to_curated.py
+         ├── machine_learning_curated.py
+         ├── steptrainer_landing_to_trusted.py
+├── Table_DLL
+         ├── accelerometer_trusted.sql
+         ├── acclerometer_landing.sql
+         ├── customer_curated.sql
+         ├── customer_landing.sql
+         ├── customer_trusted.sql
+         ├── ml_curated.sql
+         ├── step_trainer_landing.sql
+         ├── step_trainer_trusted.sql
+├── readme_images
+         ├── cust_curated_issue-1.png
+         ├── cust_curated_issue-2.png
+         ├── cust_curated_issue-3.png
+         ├── cust_curated_issue-4.png
+         ├── dropfields_dont_work-1.png
+         ├── dropfields_dont_work-2.png
+         ├── dropfields_dont_work-3.png
+         ├── dropfields_dont_work-6.png
+         ├── incorrect-customer_landing_to_trusted.png
+├── README.md
+└── starter
+         ├── accelerometer/landing
+         ├── customer/landing
+         ├── step_trainer/landing
+```
 # Queries
 ## All connected rows and sanitized
 
