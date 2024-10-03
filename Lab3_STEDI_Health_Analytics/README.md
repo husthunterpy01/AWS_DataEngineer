@@ -106,6 +106,12 @@ Lab3_STEDI_Health_Analytics
          ├── customer/landing
          ├── step_trainer/landing
 ```
+
+- The ```data_check directory``` will show the result of each tables after being process through AWS Glue and presented in AWS Athena
+- The ```Spark Glue Job``` indicates the script for Glue Data processing with the help of Spark and SparkSQL
+- ```Table_DLL``` notes the DLL of the tables formed by the join and by default format, which situates in the S3 storage
+- ```readme_images``` demonstrates some configuration using AWS Glue visual to handle with the base data to convert into the state of landing, trusted and curated
+- ```starter``` defines the base data for this lab, which will later be copied to S3 storage
 # Queries
 ## All connected rows and sanitized
 
