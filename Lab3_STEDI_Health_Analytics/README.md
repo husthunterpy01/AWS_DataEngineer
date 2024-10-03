@@ -56,6 +56,10 @@ Step Trainer: 14460
 - Their relationship is presented within this ERD:
 ![Header](./ERD_Lakehouse.png)
 
+# Project flowchart
+This project is conducted through AWS Services, such as AWS Athena, AWS Glue and and AWS S3:
+![Header](./flowchart.jpg)
+
 # Queries
 ## All connected rows and sanitized
 
