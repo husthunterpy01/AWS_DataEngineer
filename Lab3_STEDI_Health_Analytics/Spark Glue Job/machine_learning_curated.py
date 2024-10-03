@@ -1,11 +1,9 @@
 import sys
-from awsglue.transforms import *
 from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 from awsglue.context import GlueContext
 from awsglue.job import Job
 from awsglue.dynamicframe import DynamicFrame
-from pyspark.sql import functions as SqlFuncs
 
 args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 sc = SparkContext()
@@ -14,23 +12,43 @@ spark = glueContext.spark_session
 job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 
-# Script generated for node Accelerometer Trusted
-AccelerometerTrusted_node1727943185162 = glueContext.create_dynamic_frame.from_catalog(database="steadi1", table_name="accelerometer_trusted", transformation_ctx="AccelerometerTrusted_node1727943185162")
+# Load data from Glue catalog into DynamicFrames
+accelerometer_trusted_dyf = glueContext.create_dynamic_frame.from_catalog(
+    database="steadi1",
+    table_name="accelerometer_trusted",
+    transformation_ctx="accelerometer_trusted_dyf"
+)
 
-# Script generated for node Step_trainer Trusted
-Step_trainerTrusted_node1727943185938 = glueContext.create_dynamic_frame.from_catalog(database="steadi1", table_name="step_trainer_trusted", transformation_ctx="Step_trainerTrusted_node1727943185938")
+step_trainer_trusted_dyf = glueContext.create_dynamic_frame.from_catalog(
+    database="steadi1",
+    table_name="step_trainer_trusted",
+    transformation_ctx="step_trainer_trusted_dyf"
+)
 
-# Script generated for node Join
-Join_node1727943187800 = Join.apply(frame1=Step_trainerTrusted_node1727943185938, frame2=AccelerometerTrusted_node1727943185162, keys1=["sensorreadingtime"], keys2=["timestamp"], transformation_ctx="Join_node1727943187800")
+# Convert DynamicFrames to DataFrames for Spark SQL
+accelerometer_trusted_df = accelerometer_trusted_dyf.toDF()
+step_trainer_trusted_df = step_trainer_trusted_dyf.toDF()
 
-# Script generated for node Drop Duplicates
-DropDuplicates_node1727943196026 = DynamicFrame.fromDF(Join_node1727943187800.toDF().dropDuplicates(), glueContext, "DropDuplicates_node1727943196026")
+# Register the DataFrames as temporary views
+accelerometer_trusted_df.createOrReplaceTempView("accelerometer_trusted")
+step_trainer_trusted_df.createOrReplaceTempView("step_trainer_trusted")
 
-# Convert DynamicFrame to DataFrame and coalesce to a single partition
-single_partition_df = DropDuplicates_node1727943196026.toDF().repartition(1)
+# Perform the SQL join operation
+joined_df = spark.sql("""
+SELECT *
+FROM accelerometer_trusted a
+JOIN step_trainer_trusted s
+ON a.timestamp = s.sensorreadingtime
+""")
 
-# Write the DataFrame as a single JSON file
+# Remove duplicates if necessary
+joined_df = joined_df.dropDuplicates()
+
+# Coalesce to a single partition for a single output file
+output_df = joined_df.coalesce(1)
+
+# Write the result as a single JSON file
 output_path = "s3://project-lakehouse-bucket3/accelerometer/curated/"
-single_partition_df.write.json(output_path, mode="overwrite")
+output_df.write.mode("overwrite").json(output_path)
 
 job.commit()
