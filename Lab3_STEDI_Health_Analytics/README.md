@@ -42,16 +42,19 @@ In this project, we will work with three main data types, including
 Complete & Cleaned data:
 
 - Landing
- * Customer: 956
- * Accelerometer: 81273
+  * Customer: 956
+  * Accelerometer: 81273
 Step Trainer: 28680
 - Trusted
- * Customer: 482
- * Accelerometer: 40981
+  * Customer: 482
+  * Accelerometer: 40981
 Step Trainer: 14460
 - Curated
-* Customer: 482
- * Machine Learning: 43681
+  * Customer: 482
+  * Machine Learning: 43681
+
+- Their relationship is presented within this ERD:
+![Header](./ERD_Lakehouse.png)
 
 # Queries
 ## All connected rows and sanitized
@@ -113,6 +116,8 @@ FROM cl_distinct_emails cl
 
 Results: 81,273 rows
 
-
+# Some precautions:
+- I would advise to use the Spark SQL for joinning table, as this would handle SQL Query better than Glue Studio
+- When converting the output data, you should include all the files into a single file, for my case, instead as of having many .snappy files I would rather use a single .json file so as to query the data from Athena easier and avoiding the risk of data joinning mismatch or errors for later ETL process.
 
 
