@@ -71,6 +71,8 @@ Lab3_STEDI_Health_Analytics
          ├── customer_landing.png
          ├── customer_trusted.png
          ├── customers_curated.png
+         ├── customer_landing_check_null.png
+         ├── customer_trusted_check_null.png
     ├── step_trainer
          ├── step_trainer_landing.png
          ├── step_trainer_trusted.png
