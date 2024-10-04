@@ -447,5 +447,5 @@ Results: 81,273 rows
 # Some precautions:
 - I would advise to use the Spark SQL for joinning table, as this would handle SQL Query better than Glue Studio
 - When converting the output data, you should include all the files into a single file, for my case, instead as of having many .snappy files I would rather use a single .json file so as to query the data from Athena easier and avoiding the risk of data joinning mismatch or errors for later ETL process.
-
+- For the customer_curated data, it's the best to drop duplicate data to get the desired records, if not we will get over 40k records with duplicate data.
 
