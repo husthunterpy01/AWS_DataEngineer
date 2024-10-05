@@ -380,10 +380,36 @@ aws iam put-role-policy --role-name my-glue-service-role --policy-name GlueAcces
 ## Extract and load data
 - We will work on three types data, known as **customer**, **step_trainer** and **accelerometer**, in which we will have to copy into the s3 storage
   To do that, please clone this repo and then point to the directory of the data, and then enter this command
-  
    ``` aws s3 cp ./project/starter/customer/landing/customer-1691348231425.json s3://_______/customer/landing/```
 - Then please visit AWS Glue, and import or code by the Spark Glue Job file, or just drag-and-drop the box and declare the relevant information of the data to export the desire data after processing
 - We can create the Table after processing in AWS Athena, and then declare the directory where the output data lying in S3 to pour the data into the table. After that, please check the table by implementing the SQL Query on Athena.
+  Here is a glance at the landing table
+  - customer_landing
+    ![Header](./Data_Checked/customer/customer_landing.png)
+  - acceleromter_landing
+    ![Header](./Data_Checked/accelerometer/accelerometer_landing.png)
+  - step_trainer_landing
+    ![Header](./Data_Checked/step_trainer/step_trainer_landing.png)
+- Clean the data and categorize the data into the 3 types above with the following requirements:
+1. Sanitize the Customer data from the Website (Landing Zone) and only store the Customer Records who agreed to share their data for research purposes (Trusted Zone) - creating a Glue Table called **customer_trusted** - referring to [customer_landing_to_trusted.py](./Spark%20Glue%20Job/customer_landing_to_trusted.py)
+![Header](./Data_Checked/customer/customer_trusted.png)
+
+2. Sanitize the Accelerometer data from the Mobile App (Landing Zone) - and only store Accelerometer Readings from customers who agreed to share their data for research purposes (Trusted Zone) - creating a Glue Table * * called **accelerometer_trusted**. [accelerometer_landing_to_trusted.py](./Spark%20Glue%20Job/accelerometer_landing_to_trusted.py)
+![Header](./Data_Checked/accelerometer/accelerometer_trusted.png)
+You need to verify your Glue job is successful and only contains Customer Records from people who agreed to share their data. Query your Glue customer_trusted table with Athena and take a screenshot of the data. Name the screenshot customer_trusted(.png,.jpeg, etc.).
+
+- Data Scientists have discovered a data quality issue with the Customer Data. The serial number should be a unique identifier for the STEDI Step Trainer they purchased. However, there was a defect in the fulfillment website, and it used the same 30 serial numbers over and over again for millions of customers! Most customers have not received their Step Trainers yet, but those who have, are submitting Step Trainer data over the IoT network (Landing Zone). The data from the Step Trainer Records has the correct serial numbers.
+
+The Data Science team would like you to write a Glue job that does the following:
+
+1. Sanitize the Customer data **(Trusted Zone)** and create a Glue Table **(Curated Zone)** that only includes customers who have accelerometer data and have agreed to share their data for research called customers_curated. [customer_trusted_to_curated.py](./Spark%20Glue%20Job/customer_trusted_to_curated.py)
+![Header](./Data_Checked/customer/customer_curated.png)
+Finally, you need to create two Glue Studio jobs that do the following tasks:
+
+1. Read the Step Trainer IoT data stream (S3) and populate a Trusted Zone Glue Table called **step_trainer_trusted** [steptrainer_landing_to_trusted.py](./Spark%20Glue%20Job/steptrainer_landing_to_trusted.py) that contains the Step Trainer Records data for customers who have accelerometer data and have agreed to share their data for research (**customers_curated**).
+![Header](./Data_Checked/step_trainer/step_trainer_trusted.png)
+2. Create an aggregated table that has each of the Step Trainer Readings, and the associated accelerometer reading data for the same timestamp, but only for customers who have agreed to share their data, and make a glue table called **machine_learning_curated**. [ml_curated.py](./Spark%20Glue%20Job/ML_curated.py)
+![Header](./Data_Checked/ml_curated.png)
 # Queries
 ## All connected rows and sanitized
 
