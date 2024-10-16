@@ -59,10 +59,10 @@ Create the data quality operator to run checks on the data using SQL-based test 
 
 ## Reviewing Starter Code
 Before diving into development, familiarize yourself with the following files:
-- [plugins/operators/data_quality.py](plugins/operators/data_quality.py)
-- [plugins/operators/load_fact.py](plugins/operators/load_fact.py)
-- [plugins/operators/load_dimension.py](plugins/operators/load_dimension.py)
-- [plugins/operators/stage_redshift.py](plugins/operators/stage_redshift.py)
+- [plugins/operators/data_quality.py](plugins/final_project_operators/data_quality.py)
+- [plugins/operators/load_fact.py](plugins/final_project_operators/load_fact.py)
+- [plugins/operators/load_dimension.py](plugins/final_project_operators/load_dimension.py)
+- [plugins/operators/stage_redshift.py](plugins/final_project_operators/stage_redshift.py)
 - [plugins/helpers/sql_queries.py](plugins/helpers/sql_queries.py)
 - [dags/final_project.py](dags/final_project.py)
 
