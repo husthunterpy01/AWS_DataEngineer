@@ -2,14 +2,13 @@ from datetime import datetime, timedelta
 import pendulum
 import os
 from airflow.decorators import dag
-from airflow.operators.dummy_operator import DummyOperator
-from final_project_operators.stage_redshift import StageToRedshiftOperator
-from final_project_operators.load_fact import LoadFactOperator
-from final_project_operators.load_dimension import LoadDimensionOperator
-from final_project_operators.data_quality import DataQualityOperator
-from final_project_operators.create_tables import CreateTableOperator
-from udacity.common import final_project_sql_statements
-from udacity.common.final_project_sql_statements import SqlQueries
+from plugins.operators.stage_redshift import StageToRedshiftOperator
+from plugins.operators.load_fact import LoadFactOperator
+from plugins.operators.load_dimension import LoadDimensionOperator
+from plugins.operators.data_quality import DataQualityOperator
+from plugins.operators.create_tables import CreateTableOperator
+from helpers import final_project_sql_statements
+from helpers.final_project_sql_statements import SqlQueries
 from airflow.operators.postgres_operator import PostgresOperator
 import configparser
 from airflow.models import Variable
